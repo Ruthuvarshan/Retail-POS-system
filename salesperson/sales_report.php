@@ -25,6 +25,7 @@ $end_date = isset($_GET['end_date']) ? $_GET['end_date'] : date('Y-m-d'); // Tod
 $payment_method = isset($_GET['payment_method']) ? $_GET['payment_method'] : 'all';
 $customer_id = isset($_GET['customer_id']) ? (int)$_GET['customer_id'] : 0;
 $category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
+$invoice_number = isset($_GET['invoice_number']) ? $_GET['invoice_number'] : '';
 
 // Build query based on filters for sales transactions
 $query = "SELECT st.*, 
@@ -43,6 +44,11 @@ if ($payment_method !== 'all') {
 
 if ($customer_id > 0) {
     $query .= " AND st.customer_id = $customer_id";
+}
+
+if (!empty($invoice_number)) {
+    $invoice_number = mysqli_real_escape_string($conn, $invoice_number);
+    $query .= " AND st.invoice_number LIKE '%$invoice_number%'";
 }
 
 $query .= " ORDER BY st.sale_date DESC";
@@ -273,6 +279,12 @@ include '../includes/header/header.php';
                         ?>
                     </select>
                 </div>
+
+                <div class="col-md-2 form-group">
+                    <label for="invoice_number">Invoice #</label>
+                    <input type="text" class="form-control" name="invoice_number" id="invoice_number" 
+                           value="<?php echo $invoice_number; ?>">
+                </div>
                 
                 <div class="col-md-2 form-group d-flex align-items-end">
                     <button type="submit" class="btn btn-primary mr-2">
@@ -305,7 +317,7 @@ include '../includes/header/header.php';
     <!-- Summary Cards -->
     <div class="row mb-4">
         <div class="col-md-3">
-            <div class="card bg-primary text-white">
+            <div class="card bg-primary text-white summary-card">
                 <div class="card-body">
                     <h5 class="card-title">Total Sales</h5>
                     <h3 class="card-text"><?php echo $currency . number_format($total_sales_amount, 2); ?></h3>
@@ -313,7 +325,7 @@ include '../includes/header/header.php';
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-success text-white">
+            <div class="card bg-success text-white summary-card">
                 <div class="card-body">
                     <h5 class="card-title">Net Revenue</h5>
                     <h3 class="card-text"><?php echo $currency . number_format($total_revenue, 2); ?></h3>
@@ -321,7 +333,7 @@ include '../includes/header/header.php';
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-info text-white">
+            <div class="card bg-info text-white summary-card">
                 <div class="card-body">
                     <h5 class="card-title">Total Tax</h5>
                     <h3 class="card-text"><?php echo $currency . number_format($total_tax, 2); ?></h3>
@@ -329,7 +341,7 @@ include '../includes/header/header.php';
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-warning text-white">
+            <div class="card bg-warning text-white summary-card">
                 <div class="card-body">
                     <h5 class="card-title">Total Discount</h5>
                     <h3 class="card-text"><?php echo $currency . number_format($total_discount, 2); ?></h3>
@@ -686,25 +698,61 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- Include custom CSS for enhanced report styling -->
 <style>
+    /* Enhanced Report Styling */
+    .summary-card {
+        transition: transform 0.3s;
+    }
+    
+    .summary-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .filter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    /* Export buttons styling */
+    .export-btn {
+        margin-left: 5px;
+    }
+    
+    /* Print-specific styling */
     @media print {
+        body {
+            font-size: 12pt;
+        }
+        
         .non-printable {
             display: none !important;
         }
         
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        
-        .container-fluid {
+        .container {
             width: 100%;
-            margin: 0;
-            padding: 0;
+            max-width: 100%;
         }
         
-        .page-header {
+        .card {
+            break-inside: avoid;
+            border: 1px solid #ddd;
             margin-bottom: 20px;
+        }
+        
+        .page-header h2 {
+            font-size: 24pt;
+            margin-bottom: 20px;
+        }
+        
+        canvas {
+            max-width: 100% !important;
+        }
+        
+        .report-title {
+            text-align: center;
+            margin-bottom: 30px;
         }
         
         .table {
@@ -713,47 +761,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         .table th, .table td {
-            padding: 5px;
             border: 1px solid #ddd;
+            padding: 8px;
         }
-        
-        canvas {
-            max-width: 100% !important;
-            height: auto !important;
-        }
-    }
-    
-    .card {
-        margin-bottom: 20px;
-    }
-    
-    .card-header {
-        background-color: #f8f9fa;
-        font-weight: bold;
-    }
-    
-    .table th {
-        background-color: #f8f9fa;
-    }
-    
-    .page-header {
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .page-actions {
-        display: flex;
-        gap: 10px;
-    }
-    
-    .alert-info {
-        background-color: #d9edf7;
-        border-color: #bce8f1;
-        color: #31708f;
     }
 </style>
+
+<!-- Include the necessary JS libraries for export functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
 <?php
 // Include footer
