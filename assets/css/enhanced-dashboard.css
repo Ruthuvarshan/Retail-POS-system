@@ -1,0 +1,376 @@
+/* Enhanced Dashboard CSS for Admin, Sales, and Stock Manager */
+
+/* General Animation Effects */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(15px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(135deg, #3a7bd5, #1c3c60);
+    padding: 25px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInDown 0.5s ease-out;
+}
+
+.welcome-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255, 255, 255, 0.05)" d="M0,224L48,218.7C96,213,192,203,288,202.7C384,203,480,213,576,218.7C672,224,768,224,864,202.7C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: cover;
+}
+
+.welcome-message h2 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.welcome-message p {
+    margin: 8px 0 0;
+    opacity: 0.9;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* Quick Action Buttons */
+.quick-actions {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+.action-button {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-button i {
+    margin-right: 8px;
+    font-size: 1.1em;
+    transition: transform 0.3s ease;
+}
+
+.action-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.action-button:hover i {
+    transform: scale(1.2);
+}
+
+/* Stat Cards */
+.dashboard-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 220px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.15), transparent);
+    transform: skewX(-20deg) translateX(100%);
+    transition: transform 0.5s ease;
+}
+
+.stat-card:hover::after {
+    transform: skewX(-20deg) translateX(50%);
+}
+
+.stat-card-icon {
+    font-size: 24px;
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 18px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover .stat-card-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.stat-card-icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: skewX(-20deg);
+    transition: all 0.5s ease;
+}
+
+.stat-card:hover .stat-card-icon::before {
+    left: 100%;
+}
+
+.stat-card-info h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+    line-height: 1.2;
+    background: linear-gradient(45deg, #333, #777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #777;
+    margin: 5px 0 0;
+    opacity: 0.8;
+}
+
+/* Dashboard Cards */
+.dashboard-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.dashboard-card {
+    flex: 1;
+    min-width: 300px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: slideIn 0.7s ease-out forwards;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-card:first-child { animation-delay: 0.5s; }
+.dashboard-card:last-child { animation-delay: 0.7s; }
+
+.dashboard-card:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+}
+
+.card-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid #eee;
+    background: linear-gradient(to right, #f9f9f9, #ffffff);
+    border-radius: 12px 12px 0 0;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.card-header h3 i {
+    margin-right: 12px;
+    color: #3498db;
+    font-size: 1.2em;
+    background: rgba(52, 152, 219, 0.1);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover .card-header h3 i {
+    transform: scale(1.2);
+}
+
+.card-content {
+    padding: 22px;
+}
+
+/* Tables */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 2px solid #eee;
+    color: #555;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.data-table td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.data-table tr:hover td {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.data-table a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.data-table a:hover {
+    color: #2980b9;
+}
+
+.card-footer {
+    padding: 16px 22px;
+    border-top: 1px solid #eee;
+    text-align: right;
+}
+
+.btn-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+.btn-link:hover {
+    background: linear-gradient(135deg, #2980b9, #1c6ca1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.status-green {
+    background-color: #e8f5e9;
+    color: #4CAF50;
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.15);
+}
+
+.status-yellow {
+    background-color: #fff8e1;
+    color: #FFC107;
+    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.15);
+}
+
+.status-red {
+    background-color: #ffebee;
+    color: #F44336;
+    box-shadow: 0 2px 5px rgba(244, 67, 54, 0.15);
+}
+
+.status-badge:hover {
+    transform: translateY(-2px);
+}

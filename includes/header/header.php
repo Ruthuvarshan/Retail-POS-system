@@ -27,11 +27,14 @@ if ($settings_result) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($settings['company_name']) ? $settings['company_name'] : 'Retail POS System'; ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title><?php echo isset($settings['company_name']) ? $settings['company_name'] : 'Retail POS System'; ?></title>
     <link rel="stylesheet" href="/dbms_project/assets/css/style.css">
+    <!-- Enhanced Dashboard Styles -->
+    <link rel="stylesheet" href="/dbms_project/assets/css/enhanced-dashboard.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Animate.css for additional animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <div class="wrapper">

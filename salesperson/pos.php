@@ -71,8 +71,7 @@ if (isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
         if ($product['stock_quantity'] >= $quantity) {
             $productPrice = $product['selling_price'];
             $productTotal = $productPrice * $quantity;
-            
-            // Check if product already exists in cart
+              // Check if product already exists in cart
             $found = false;
             foreach ($_SESSION['pos_cart'] as &$item) {
                 if ($item['product_id'] == $productId) {
@@ -93,6 +92,8 @@ if (isset($_POST['add_to_cart']) && isset($_POST['product_id'])) {
                     break;
                 }
             }
+            // Unset the reference to avoid bugs when adding multiple products
+            unset($item);
             
             // If product was not found in the cart, add it
             if (!$found) {
@@ -351,9 +352,8 @@ include '../includes/header/header.php';
                         
                         if ($productsResult && mysqli_num_rows($productsResult) > 0) {
                             while ($product = mysqli_fetch_assoc($productsResult)) {
-                                ?>
-                                <div class="product-item">
-                                    <form method="post" action="">
+                                ?>                                <div class="product-item">
+                                    <form method="post" action="pos.php">
                                         <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                                         <input type="hidden" name="quantity" value="1">
                                         

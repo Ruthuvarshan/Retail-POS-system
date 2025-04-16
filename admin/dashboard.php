@@ -190,65 +190,131 @@ include '../includes/header/header.php';
 
 <style>
     .welcome-banner {
-        background-color: #2c3e50;
-        padding: 20px;
-        border-radius: 5px;
+        background: linear-gradient(135deg, #3a7bd5, #1c3c60);
+        padding: 25px;
+        border-radius: 10px;
         color: white;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInDown 0.5s ease-out;
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .welcome-banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255, 255, 255, 0.05)" d="M0,224L48,218.7C96,213,192,203,288,202.7C384,203,480,213,576,218.7C672,224,768,224,864,202.7C960,181,1056,139,1152,122.7C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: cover;
     }
     
     .welcome-message h2 {
         margin: 0;
-        font-size: 24px;
+        font-size: 26px;
+        font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        letter-spacing: 0.5px;
     }
     
     .welcome-message p {
-        margin: 5px 0 0;
-        opacity: 0.8;
+        margin: 8px 0 0;
+        opacity: 0.9;
+        font-size: 15px;
+        letter-spacing: 0.5px;
     }
     
     .quick-actions {
         display: flex;
-        gap: 10px;
+        gap: 12px;
+        position: relative;
+        z-index: 2;
     }
-    
-    .action-button {
-        background-color: rgba(255, 255, 255, 0.2);
+      .action-button {
+        background: rgba(255, 255, 255, 0.15);
         color: white;
         border: none;
-        padding: 10px 15px;
-        border-radius: 4px;
+        padding: 12px 18px;
+        border-radius: 50px;
         cursor: pointer;
         text-decoration: none;
         display: flex;
         align-items: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     
     .action-button i {
-        margin-right: 5px;
+        margin-right: 8px;
+        font-size: 1.1em;
+        transition: transform 0.3s ease;
     }
     
     .action-button:hover {
-        background-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+    }
+    
+    .action-button:hover i {
+        transform: scale(1.2);
     }
     
     .dashboard-stats {
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
     
     .stat-card {
         flex: 1;
-        min-width: 200px;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        padding: 20px;
+        min-width: 220px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        padding: 24px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.6s ease-out forwards;
+        opacity: 0;
+    }
+    
+    .stat-card:nth-child(1) { animation-delay: 0.1s; }
+    .stat-card:nth-child(2) { animation-delay: 0.2s; }
+    .stat-card:nth-child(3) { animation-delay: 0.3s; }
+    .stat-card:nth-child(4) { animation-delay: 0.4s; }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
         display: flex;
         align-items: center;
     }

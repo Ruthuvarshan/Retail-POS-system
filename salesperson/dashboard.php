@@ -69,73 +69,86 @@ function getPerformanceMetrics($conn) {
 include '../includes/header/header.php';
 ?>
 
-<div class="container">
-    <div class="page-header">
-        <h2><i class="fas fa-chart-line"></i> Sales Dashboard</h2>
+<div class="welcome-banner">
+    <div class="welcome-message">
+        <h2>Welcome, <?php echo $_SESSION['full_name']; ?>!</h2>
+        <p><?php echo date('l, F d, Y'); ?></p>
     </div>
+    <div class="quick-actions">
+        <a href="pos.php" class="action-button"><i class="fas fa-cash-register"></i> New Sale</a>
+        <a href="customers.php?action=add" class="action-button"><i class="fas fa-user-plus"></i> Add Customer</a>
+        <a href="sales_report.php" class="action-button"><i class="fas fa-chart-bar"></i> Sales Report</a>
+    </div>
+</div>
 
     <!-- Performance Metrics -->
-    <div class="row mb-4">
-        <div class="col-md-3">
-            <div class="card text-white bg-primary">
-                <div class="card-body">
-                    <h5>Total Sales</h5>
-                    <h2><?= $performanceMetrics['total_sales'] ?></h2>
-                </div>
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-card-icon" style="background-color: #4CAF50;">
+                <i class="fas fa-cash-register"></i>
+            </div>            <div class="stat-card-info">
+                <h3>Total Sales</h3>
+                <p class="stat-value"><?= $performanceMetrics['total_sales'] ?></p>
+                <p class="stat-label">Transactions</p>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-success">
-                <div class="card-body">
-                    <h5>Total Revenue</h5>
-                    <h2>₹<?= number_format($performanceMetrics['total_revenue'], 2) ?></h2>
-                </div>
+        
+        <div class="stat-card">
+            <div class="stat-card-icon" style="background-color: #2196F3;">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="stat-card-info">
+                <h3>Total Revenue</h3>
+                <p class="stat-value">$<?= number_format($performanceMetrics['total_revenue'], 2) ?></p>
+                <p class="stat-label">Sales amount</p>
+            </div>        </div>
+        
+        <div class="stat-card">
+            <div class="stat-card-icon" style="background-color: #673AB7;">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-card-info">
+                <h3>Average Sale</h3>
+                <p class="stat-value">$<?= number_format($performanceMetrics['avg_sale'], 2) ?></p>
+                <p class="stat-label">Per transaction</p>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-info">
-                <div class="card-body">
-                    <h5>Average Sale</h5>
-                    <h2>₹<?= number_format($performanceMetrics['avg_sale'], 2) ?></h2>
-                </div>
+        
+        <div class="stat-card">
+            <div class="stat-card-icon" style="background-color: #FF9800;">
+                <i class="fas fa-trophy"></i>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-white bg-warning">
-                <div class="card-body">
-                    <h5>Best Sale</h5>
-                    <h2>₹<?= number_format($performanceMetrics['best_sale'], 2) ?></h2>
-                </div>
+            <div class="stat-card-info">
+                <h3>Best Sale</h3>
+                <p class="stat-value">$<?= number_format($performanceMetrics['best_sale'], 2) ?></p>
+                <p class="stat-label">Highest transaction</p>
             </div>
         </div>
     </div>
 
     <!-- Sales Charts -->
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Sales Trends</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="salesChart"></canvas>
-                </div>
+    <div class="dashboard-row">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3><i class="fas fa-chart-area"></i> Sales Trends</h3>
+            </div>
+            <div class="card-content">
+                <canvas id="salesChart"></canvas>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Top Products</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="productsChart"></canvas>
-                </div>
+        
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3><i class="fas fa-chart-pie"></i> Top Products</h3>
             </div>
-        </div>
-    </div>
+            <div class="card-content">
+                <canvas id="productsChart"></canvas>
+            </div>
+        </div>    </div>
 </div>
 
-<script src="../assets/js/chart.js"></script>
+<!-- Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
 // Sales Trend Chart
 new Chart(document.getElementById('salesChart'), {

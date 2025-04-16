@@ -1,0 +1,165 @@
+/* Print-specific styles for Retail POS System */
+
+@media print {
+    /* General Print Styles */
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+        font-family: 'Arial', sans-serif;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Header Styling */
+    .print-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .print-header h1 {
+        font-size: 18pt;
+        margin: 0;
+        padding: 0;
+        color: #000;
+    }
+
+    .print-header p {
+        font-size: 10pt;
+        margin: 5px 0;
+    }
+
+    /* Hide elements not needed in print */
+    .non-printable,
+    .sidebar, 
+    .top-header,
+    nav,
+    .sidebar-toggle,
+    .header-actions,
+    .page-actions,
+    footer,
+    button:not(.print-include),
+    .btn:not(.print-include) {
+        display: none !important;
+    }
+
+    /* Ensure wrapper takes full width */
+    .wrapper,
+    .main-content,
+    .container,
+    .container-fluid {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        left: 0 !important;
+        position: relative !important;
+        transform: none !important;
+    }
+
+    /* Dashboard cards in print */
+    .dashboard-card,
+    .stat-card,
+    .card {
+        page-break-inside: avoid;
+        border: 1px solid #ddd !important;
+        margin-bottom: 15px !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        background: white !important;
+        color: black !important;
+        border-radius: 0 !important;
+    }
+
+    /* Table styles for print */
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        page-break-inside: auto !important;
+    }
+
+    tr {
+        page-break-inside: avoid !important;
+        page-break-after: auto !important;
+    }
+
+    th {
+        background-color: #f2f2f2 !important;
+        color: black !important;
+        border-bottom: 1px solid #ddd !important;
+        font-weight: bold !important;
+    }
+
+    td, th {
+        padding: 8px !important;
+        text-align: left !important;
+        font-size: 9pt !important;
+        border: 1px solid #ddd !important;
+    }
+
+    /* Chart resizing for print */
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Page breaks */
+    .page-break {
+        page-break-after: always;
+    }
+
+    /* Print title */
+    .print-title {
+        font-size: 16pt;
+        font-weight: bold;
+        text-align: center;
+        margin: 20px 0;
+        border-bottom: 1px solid #000;
+        padding-bottom: 10px;
+    }
+
+    /* Print footer */
+    .print-footer {
+        text-align: center;
+        font-size: 9pt;
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+        padding-top: 10px;
+    }
+
+    /* Print summary */
+    .print-summary {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background: #f9f9f9 !important;
+    }
+
+    /* Print metadata */
+    .print-metadata {
+        font-size: 9pt;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    /* Status badges */
+    .status-badge {
+        border: 1px solid #000 !important;
+        background: none !important;
+        color: #000 !important;
+        padding: 2px 5px !important;
+        font-size: 8pt !important;
+    }
+
+    .status-green {
+        background-color: #e8f5e9 !important;
+    }
+    
+    .status-yellow {
+        background-color: #fff8e1 !important;
+    }
+    
+    .status-red {
+        background-color: #ffebee !important;
+    }
+}

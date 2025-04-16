@@ -110,40 +110,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>&copy; <?php echo date('Y'); ?> Retail POS System. All rights reserved.</p>
         </div>
     </div>
-    
-    <style>
+      <style>
         body.login-page {
-            background-color:rgb(0, 255, 255);
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             height: 100vh;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .login-container {
             width: 400px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgb(255, 0, 0);
-            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .login-header {
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+          .login-header {
             text-align: center;
             margin-bottom: 30px;
         }
         
         .login-header h1 {
-            font-size: 24px;
-            color: #333;
+            font-size: 28px;
+            color: #2c3e50;
             margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
         }
         
         .login-header p {
-            color: #777;
+            color: #555;
             margin: 0;
+            font-size: 16px;
+            letter-spacing: 0.3px;
         }
         
         .form-group {
@@ -163,11 +182,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border-radius: 3px;
             font-size: 16px;
         }
-        
-        .form-group input:focus {
+          .form-group input:focus {
             border-color: #4CAF50;
             outline: none;
             box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            transition: all 0.3s ease;
         }
         
         .form-actions {
@@ -176,35 +195,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         .btn {
             display: inline-block;
-            font-weight: 400;
+            font-weight: 500;
             text-align: center;
             white-space: nowrap;
             vertical-align: middle;
             user-select: none;
             border: 1px solid transparent;
-            padding: 0.375rem 0.75rem;
+            padding: 0.5rem 1rem;
             font-size: 1rem;
             line-height: 1.5;
             border-radius: 0.25rem;
-            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
         
-        .btn-primary {
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+          .btn-primary {
             color: #fff;
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
             border-color: #4CAF50;
+            box-shadow: 0 3px 5px rgba(46, 125, 50, 0.2);
         }
         
         .btn-primary:hover {
-            background-color: #45a049;
-            border-color: #45a049;
+            background: linear-gradient(135deg, #43A047, #2E7D32);
+            border-color: #2E7D32;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            transform: translateY(-2px);
         }
         
         .btn-block {
             display: block;
             width: 100%;
             padding: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
         }
         
         .login-footer {
