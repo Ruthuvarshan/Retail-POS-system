@@ -76,7 +76,7 @@ include '../includes/header/header.php';
 <!-- Include Print Stylesheet -->
 <link rel="stylesheet" href="../assets/css/print-styles.css" media="print">
 
-<div class="container-fluid">
+<div id="invoice-container" class="container-fluid">
     <!-- Print-only header that will appear on printed invoice -->
     <div class="print-header" style="display:none;">
         <h1><?php echo isset($settings['company_name']) ? $settings['company_name'] : 'Retail POS System'; ?></h1>
@@ -351,3 +351,95 @@ include '../includes/header/header.php';
 mysqli_close($conn);
 include '../includes/footer/footer.php';
 ?>
+
+<script>
+// Enhanced print functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get print button and add event listener
+    var printBtn = document.getElementById('printInvoiceBtn');
+    if (!printBtn) {
+        // If the button with ID doesn't exist, try to find it by class
+        var buttons = document.querySelectorAll('.btn-primary');
+        for (var i = 0; i < buttons.length; i++) {
+            if (buttons[i].textContent.includes('Print Invoice')) {
+                printBtn = buttons[i];
+                break;
+            }
+        }
+    }
+
+    if (printBtn) {
+        // Remove any existing click listeners
+        printBtn.onclick = null;
+        
+        // Add our event listener
+        printBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Create a temporary style element to force all content visible during print
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.id = 'temp-print-style';
+            style.innerHTML = `
+                @media print {
+                    body * {
+                        visibility: visible !important;
+                        overflow: visible !important;
+                    }
+                    html, body {
+                        height: auto !important;
+                        overflow: visible !important;
+                        width: 100% !important;
+                        margin: 0 !important;
+                        padding: 0 !important;
+                    }
+                    .print-header, .print-footer {
+                        display: block !important;
+                    }
+                    table { 
+                        page-break-inside: auto !important; 
+                    }
+                    tr { 
+                        page-break-inside: avoid !important;
+                    }
+                    .dashboard-card {
+                        page-break-inside: auto !important;
+                    }
+                    .invoice-section .table-responsive {
+                        overflow: visible !important;
+                    }
+                    .non-printable {
+                        display: none !important;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Show print-only elements
+            var printElements = document.querySelectorAll('.print-header, .print-footer');
+            for (var i = 0; i < printElements.length; i++) {
+                printElements[i].style.display = 'block';
+            }
+            
+            // Wait a bit to ensure styles are applied
+            setTimeout(function() {
+                window.print();
+                
+                // Clean up after printing
+                setTimeout(function() {
+                    // Remove temporary style
+                    var tempStyle = document.getElementById('temp-print-style');
+                    if (tempStyle) {
+                        document.head.removeChild(tempStyle);
+                    }
+                    
+                    // Hide print-only elements again
+                    for (var i = 0; i < printElements.length; i++) {
+                        printElements[i].style.display = 'none';
+                    }
+                }, 500);
+            }, 300);
+        });
+    }
+});
+</script>

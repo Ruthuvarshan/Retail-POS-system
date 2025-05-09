@@ -10,12 +10,13 @@
         width: 100%;
         margin: 0;
         padding: 0;
-    }
 
     /* Header Styling */
     .print-header {
         text-align: center;
         margin-bottom: 20px;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
     }
 
     .print-header h1 {
@@ -28,6 +29,13 @@
     .print-header p {
         font-size: 10pt;
         margin: 5px 0;
+    }
+    
+    /* Ensure the header stays with content */
+    .print-header + div,
+    .print-header + .dashboard-card,
+    .print-header + .page-header + .dashboard-card {
+        page-break-before: avoid !important;
     }
 
     /* Hide elements not needed in print */
@@ -69,18 +77,24 @@
         background: white !important;
         color: black !important;
         border-radius: 0 !important;
-    }
-
-    /* Table styles for print */
+    }    /* Table styles for print */
     table {
         width: 100% !important;
         border-collapse: collapse !important;
         page-break-inside: auto !important;
+        table-layout: auto !important;
+        overflow: visible !important;
     }
 
     tr {
         page-break-inside: avoid !important;
         page-break-after: auto !important;
+        page-break-inside: auto !important;
+    }
+    
+    /* Ensure table footers stay together */
+    tfoot {
+        display: table-footer-group !important;
     }
 
     th {
@@ -97,69 +111,187 @@
         border: 1px solid #ddd !important;
     }
 
-    /* Chart resizing for print */
-    canvas {
+    /* Invoice and Receipt styling */
+    .invoice-container, 
+    .receipt-container {
         max-width: 100% !important;
-        height: auto !important;
+        padding: 10px 0 !important;
+        margin: 0 !important;
     }
 
-    /* Page breaks */
-    .page-break {
-        page-break-after: always;
+    /* Customer and order information blocks in invoices */
+    .customer-info,
+    .order-info {
+        margin-bottom: 20px !important;
+        border: 1px solid #ddd !important;
+        padding: 10px !important;
+        break-inside: avoid !important;
     }
 
-    /* Print title */
-    .print-title {
-        font-size: 16pt;
-        font-weight: bold;
-        text-align: center;
-        margin: 20px 0;
-        border-bottom: 1px solid #000;
-        padding-bottom: 10px;
+    /* Order items table in invoices and receipts */
+    .order-items {
+        margin-bottom: 20px !important;
+        break-inside: auto !important;
     }
 
-    /* Print footer */
-    .print-footer {
-        text-align: center;
-        font-size: 9pt;
-        margin-top: 30px;
-        border-top: 1px solid #ddd;
-        padding-top: 10px;
+    /* Totals section in invoices and receipts */
+    .order-totals {
+        border-top: 2px solid #000 !important;
+        padding-top: 10px !important;
+        margin-top: 10px !important;
+        font-weight: bold !important;
+        break-inside: avoid !important;
     }
 
-    /* Print summary */
-    .print-summary {
-        margin: 20px 0;
-        padding: 10px;
-        border: 1px solid #ddd;
-        background: #f9f9f9 !important;
+    /* Payment information styling */
+    .payment-info {
+        margin-top: 20px !important;
+        font-size: 10pt !important;
+        break-inside: avoid !important;
     }
 
-    /* Print metadata */
-    .print-metadata {
-        font-size: 9pt;
-        color: #666;
-        margin-bottom: 20px;
+    /* Barcode styling for receipts */
+    .barcode {
+        margin: 15px auto !important;
+        text-align: center !important;
     }
 
-    /* Status badges */
-    .status-badge {
-        border: 1px solid #000 !important;
-        background: none !important;
-        color: #000 !important;
-        padding: 2px 5px !important;
+    /* Print only elements */
+    .print-only {
+        display: block !important;
+    }
+
+    /* Image optimization for print */
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Receipt logo */
+    .receipt-logo {
+        max-height: 60px !important;
+        margin: 0 auto 10px !important;
+        display: block !important;
+    }
+
+    /* QR code for digital receipts */
+    .receipt-qr {
+        max-width: 100px !important;
+        margin: 10px auto !important;
+        display: block !important;
+    }
+
+    /* Terms and conditions section */
+    .terms-conditions {
         font-size: 8pt !important;
+        margin-top: 20px !important;
+        color: #666 !important;
+        border-top: 1px solid #ddd !important;
+        padding-top: 10px !important;
     }
 
-    .status-green {
-        background-color: #e8f5e9 !important;
+    /* Signature area */
+    .signature-area {
+        margin-top: 30px !important;
+        border-top: 1px dotted #000 !important;
+        padding-top: 10px !important;
+        font-size: 9pt !important;
+    }    /* Page numbers */
+    @page {
+        margin: 0.5cm !important;
+        size: auto !important;
+        
+        @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+            font-size: 8pt;
+        }
     }
     
-    .status-yellow {
-        background-color: #fff8e1 !important;
+    /* Report specific print styles */
+    .chart-container {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 20px !important;
     }
     
-    .status-red {
-        background-color: #ffebee !important;
+    .chart-wrapper {
+        height: auto !important;
+        min-height: 250px !important;
+        max-height: 300px !important;
+        width: 100% !important;
+        page-break-inside: avoid !important;
+    }
+    
+    .report-table {
+        width: 100% !important;
+        margin-bottom: 20px !important;
+        page-break-inside: auto !important;
+    }
+    
+    .report-table tr {
+        page-break-inside: avoid !important;
+    }
+    
+    .report-summary {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        page-break-inside: avoid !important;
+    }
+    
+    .two-column {
+        display: block !important;
+        page-break-after: auto !important;
+    }
+      canvas {
+        max-height: 250px !important;
+    }
+    
+    /* Fix for container element */
+    .container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Ensure header prints properly */
+    h1, h2, h3 {
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* Force each major section to start on a new page */
+    .page-break-before {
+        page-break-before: always !important;
+    }
+    
+    /* Fix for two-column layout in print */
+    .two-column {
+        display: block !important;
+        width: 100% !important;
+    }
+    
+    /* Fix embedded chart styles for print */
+    .chart-wrapper {
+        page-break-inside: avoid !important;
+        page-break-before: auto !important;
+        page-break-after: auto !important;
+    }
+    }
+
+    /* Print media optimization */
+    @page {
+        size: auto !important;
+        margin: 0.5cm !important;
+    }
+    
+    @page :first {
+        margin-top: 0.5cm !important;
+    }
+
+    /* Alternating row colors for better readability */
+    tr:nth-child(even) {
+background-color: #f9f9f9 !important;
     }
 }
